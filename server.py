@@ -50,7 +50,7 @@ class MyHandler(webapp.RequestHandler):
                 testVO = TestVO()
                 testVO.id = testId
                 testVO.author = user
-            testVO.content = str(self.request.get('testDTO'))
+            testVO.content = self.request.get('testDTO').encode('utf-8')
             testVO.title = self.request.get('title')
             testVO.save()   # create or update
             self.response.out.write(json.dumps(testId))
