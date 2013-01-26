@@ -25,7 +25,6 @@ class MainPage(webapp.RequestHandler):
                                     cgi.escape(greeting.content))
 
         # Write the submission form and the footer of the page
-        # ligne de commentaire ajoutée
         self.response.out.write("""
               <form action="/sign" method="post">
                 <div><textarea name="content" rows="3" cols="60"></textarea></div>
