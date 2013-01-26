@@ -1,0 +1,33 @@
+<script id="editTestTemplate" type="text/html">
+	
+	<div id="editTest" data-bind="with: testVO">
+		
+		<div>
+			<input data-bind="value: title"/>
+		</div>
+
+		<table>
+			<tbody>
+				<tr>
+					<th>Question</th>
+					<th>Réponse</th>
+				</tr>
+				<!-- ko foreach: testItemVOs -->
+				<tr>
+					<td><input data-bind="value: question"/></td>
+					<td><input data-bind="value: response, event: {keydown: $root.ui.onKeyDown}"/></td>
+				</tr>
+				<!-- /ko -->
+			</tbody>
+		</table>
+		<hr>
+		<div class="ui-grid-b">
+			<div class="ui-block-a"><button data-mini="true" data-bind="event: {click: addEmptyTestItems}">ajouter</button></div>
+			<div class="ui-block-b"><button data-mini="true" data-bind="event: {click: $root.ui.saveTest}">sauver</button></div>
+			<div class="ui-block-c"><button data-mini="true" data-bind="event: {click: $root.ui.showTestDeleteConfirmPopup}">supprimer</button></div>
+		</div>
+		
+	</div>
+	
+	
+</script>

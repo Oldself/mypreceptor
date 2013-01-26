@@ -1,0 +1,43 @@
+<script id="runTestTemplate" type="text/html">
+
+	<div id="testPage">
+		<span class="title" data-bind="text: testVO().title"></span>
+		<br/>
+		Réalisé: <span data-bind="text: $root.testVO().nbRespondedTestItem()"></span> / <span data-bind="text: $root.testVO().totalTestItems"></span>
+		<p/>
+		<div class="ui-body ui-body-a">
+		<!-- ko with: testItemVO -->
+			<div data-bind="visible:normalizedInput() != normalizedResponse()">
+				<div data-bind="text: question"></div>
+				<!-- ko if: $root.autoFocus() -->
+					<input data-bind="value:input, valueUpdate:'afterkeydown', hasfocus:normalizedInput() != normalizedResponse()"/>
+				<!-- /ko -->
+				<!-- ko ifnot: $root.autoFocus() -->
+					<input data-bind="value:input, valueUpdate:'afterkeydown'"/>
+				<!-- /ko -->
+				<div data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="b">
+					<h3>Voir le résultat</h3>
+					<p data-bind="text: response"></p>
+					<div class="ui-grid-a">
+						<div class="ui-block-a"><button data-mini="true" data-bind="event: {click: $root.ui.responseOK}">OK</button></div>
+						<div class="ui-block-b"><button data-mini="true" data-bind="event: {click: $root.ui.responseNOK}">à refaire</button></div>
+					</div>
+				</div>
+			</div>
+			<div data-bind="visible:normalizedInput() == normalizedResponse()">
+				<h1>Exact !</h1>
+				<div data-bind="visible: $root.testVO().nbUnrespondedTestItem()!=0">
+					<button data-mini="true" data-bind="event: {click: $root.ui.responseOK}">suivant</button>
+				</div>
+			</div>					
+		<!-- /ko -->
+		<div data-bind="visible:$root.testVO().nbUnrespondedTestItem()==0">
+			<h3>Vous avez terminé tous les test !</h3>
+			<div class="ui-grid-a">
+				<div class="ui-block-a"><button data-mini="true" data-bind="event: {click: ui.reRunTest}">refaire</button></div>
+				<div class="ui-block-b"><button data-mini="true" data-bind="event: {click: ui.back}">retour</button></div>
+			</div>
+		</div>
+		</div>
+	</div>
+</script>

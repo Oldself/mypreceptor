@@ -1,0 +1,50 @@
+html {
+	font-size: x-large;
+}
+
+
+.resultPass {
+	background-color: green;
+}
+.resultGaveUp {
+	background-color: yellow;
+}
+
+#editTest table tr td {
+	border: none;
+}
+#editTest table {
+	width: 100%;
+}
+/*-------------------------------------------------
+ * Run test
+ *-------------------------------------------------*/
+
+#testPage .title {
+	font-weight: bold;
+}
+
+#testPage table {
+  	width: 640px;
+  	margin-bottom: 0.5em;
+}
+@media screen and (max-width: 640px) {
+  #testPage table {
+  	width: 100%;
+  }
+}
+#testPage td.question, #testPage td.response {
+	width: 40%;
+}
+#testPage td.result {
+	width: 20%;
+}
+#testPage td.pass {
+	background-color: #CCFF99;
+}
+#testPage td.fail {
+	background-color: #FF0000;
+}
+#testPage td.gaveup {
+	background-color: #FF6600;
+}

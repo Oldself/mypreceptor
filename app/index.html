@@ -1,0 +1,63 @@
+<!DOCTYPE html> 
+<!--
+<html manifest="site.manifest">
+	-->
+<html> 
+<head> 
+	<title>My Preceptor</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="icon" href="applications-education-school.png" type="image/png"/>
+	
+	<!-- see http://mobile.tutsplus.com/tutorials/iphone/iphone-web-app-meta-tags/ -->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="apple-touch-icon" href="applications-education-school.png"/>  
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+	<script type="text/javascript" src="scripts/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="scripts/knockout-2.1.0.js"></script>
+	<link rel="stylesheet" href="scripts/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.css" />
+	<script type="text/javascript" src="scripts/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	
+	<!-- application -->
+	<link rel="stylesheet" href="style.css" />
+    <script data-main="scripts/main" src="scripts/require.js"></script>
+    
+</head>
+<body>
+	<div data-role="page" id="home">
+		<div data-role="header">
+			<a data-bind="visible:mainState()!=STATE_HOME, event:{click:ui.back}" data-icon="back" style="display:none">retour</a>
+			<h1>My Preceptor</h1>
+		</div>
+	<div data-role="content">
+		<!-- ko if: mainState() == STATE_HOME -->
+			<!-- ko template: {name:'homeTemplate' } --><!-- /ko -->
+		<!-- /ko -->
+		<!-- ko if: mainState() == STATE_LIST_TESTS -->
+			<!-- ko template: {name:'listTestsTemplate' } --><!-- /ko -->
+		<!-- /ko -->
+		<!-- ko if: mainState() == STATE_RUN_TEST -->
+			<!-- ko template: {name:'runTestTemplate' } --><!-- /ko -->
+		<!-- /ko -->
+		<!-- ko if: mainState() == STATE_EDIT_TEST -->
+			<!-- ko template: {name:'editTestTemplate' } --><!-- /ko -->
+		<!-- /ko -->
+
+		<!-- popups must be present in page from the start -->
+		<!-- FL: pas réussi a mettre proprement dans un template -->
+		<div data-role="popup" id="deleteTestConfirmPopup" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1 data-bind="text:testVO() &amp;&amp; testVO().title"></h1>
+			</div>
+			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+				<h3 class="ui-title">Supprimer ce test ?</h3>
+				<p>Cette action ne peut pas être annulée.</p>
+				<a data-role="button" data-inline="true" data-theme="c" data-bind="event:{click:$root.ui.hideTestDeleteConfirmPopup}">annuler</a>    
+				<a data-role="button" data-inline="true" data-transition="flow" data-theme="b" data-bind="event:{click:$root.ui.deleteTest}">supprimer</a>  
+			</div>
+		</div>
+	</div>
+</body>
+</html>

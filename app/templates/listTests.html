@@ -1,0 +1,11 @@
+<script id="listTestsTemplate" type="text/html">
+	<div id="testsList">
+		<ul  data-role="listview"  data-split-icon="gear" data-bind="foreach: testVOs">
+			<li><a data-bind="text: title, event:{click:$root.ui.gotoRunTest}"></a>
+				<a data-bind="event:{click:$root.ui.gotoEditTest}">edit</a>
+			</li>
+		</ul>
+		<p/>
+		<a data-role="button" data-inline="true" data-mini="true" data-bind="event:{click:ui.gotoNewTest}">nouveau test</a>
+	</div>
+</script>

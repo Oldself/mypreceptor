@@ -1,0 +1,47 @@
+CACHE MANIFEST
+
+# Version 1.6
+# astuce : find ~/Documents/Aptana\ Studio\ 3\ Workspace/WebTrebi/mytutor/ -type f
+
+templates/editTest.html
+templates/listTests.html
+templates/runTest.html
+templates/master.js
+templates/home.html
+style.css
+scripts/sammy-0.7.1.min.js
+scripts/signals.js
+scripts/jquery-1.8.2.min.js
+scripts/crossroads.min.js
+scripts/knockout-2.1.0.js
+scripts/text.js
+scripts/path.min.js
+scripts/main.js
+scripts/require.js
+scripts/jquery.mobile-1.2.0/images/icons-36-white.png
+scripts/jquery.mobile-1.2.0/images/ajax-loader.gif
+scripts/jquery.mobile-1.2.0/images/icons-18-black.png
+scripts/jquery.mobile-1.2.0/images/icons-36-black.png
+scripts/jquery.mobile-1.2.0/images/icons-18-white.png
+scripts/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.css
+scripts/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.js
+index.php
+test_default_title.js
+toto.php
+server.php
+site.manifest
+test.js
+controller/controller.js
+controller/routing.js
+controller/mapper.js
+controller/delegate.js
+test_model.js
+test.html
+model/TestVO.js
+model/constants.js
+model/Model.js
+model/TestItemVO.js
+applications-education-school.png
+test_model2.js
+
+

@@ -1,0 +1,16 @@
+application: mypreceptor
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /server.*
+  script: server.py
+  login: required
+- url: /app
+  static_dir: app
+  login: required
+- url: /fr
+  static_dir: fr
+- url: /.*
+  script: welcome.py
