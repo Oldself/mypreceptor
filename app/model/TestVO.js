@@ -22,7 +22,6 @@ define(["./constants", "./TestItemVO"], function(constants, TestItemVO) {
 		};
 		
 		self.trimEmptyTestItems = function() {
-			console.log("TRIM");
 			for (var i=self.testItemVOs().length -1; i>=0; i--)
 				if (!self.testItemVOs()[i].question() || !self.testItemVOs()[i].response())
 					self.testItemVOs.splice(i, 1);
