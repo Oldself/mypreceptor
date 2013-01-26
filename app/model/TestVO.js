@@ -8,7 +8,7 @@ define(["./constants", "./TestItemVO"], function(constants, TestItemVO) {
 		self.id = ko.observable("" + (new Date()).getTime());			// default id = timeStamp in seconds, as a String
 		self.title = ko.observable("sans titre");
 		self.testItemVOs = ko.observableArray();
-		
+		self.diacriticalSensitive = ko.observable(false);
 		
 		self.totalTestItems = ko.computed(function() {
 			return self.testItemVOs().length;
@@ -17,7 +17,7 @@ define(["./constants", "./TestItemVO"], function(constants, TestItemVO) {
 		self.addEmptyTestItems = function(n) {
 			n = typeof(n) == "number" ? n : 3;		// when called from template, n is a testVO
 			for (var i=0; i<n; i++)
-				self.testItemVOs.push(new TestItemVO("", "", ""));
+				self.testItemVOs.push(new TestItemVO(self, "", "", ""));
 			$(document).trigger("create");		// TODO move into a controller
 		};
 		

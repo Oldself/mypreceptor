@@ -26,6 +26,7 @@ define(["./mapper", "../model/TestVO", "../model/TestItemVO"], function(mapper, 
 		for (var i=0; i<jsonTestVO.testItemVOs.length; i++) {
 			var jsonTestItemVO = jsonTestVO.testItemVOs[i];
 			var testItemVO = new TestItemVO(
+				testVO,
 				jsonTestItemVO.question,
 				jsonTestItemVO.response,
 				jsonTestItemVO.type

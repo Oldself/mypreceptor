@@ -3,13 +3,13 @@ define([], function(){
 	var strings = {};
 	
 	/**
-	 * Trim string, remove extra spaces and replace diacriticals.
+	 * Trim string, remove extra spaces and optionaly replace diacriticals.
 	 */
-	strings.normalize = function (text, processOnlySpaces) {
+	strings.normalize = function (text, diacriticalSensitive) {
 		if (!text)
 			return text;
 		text = strings.trimExtraSpaces(strings.trim(text));
-		if (!processOnlySpaces)
+		if (!diacriticalSensitive)
 			text = strings.replaceDiacriticals(text);
 		return text;
 	}
