@@ -115,7 +115,7 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 				success(result);
 			},
 			error: error ? error : delegate.genericErrorHandler,
-			dataType: "text"
+			dataType: "json"
 		});
 	};
 	
