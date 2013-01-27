@@ -5,7 +5,7 @@
  * 2 - centralize into a single 'ui' object all the methods that
  *     can be called from the user interface. 
  */
-define(["./application", "./testEdition", "./testRun", "./routing"], 
+define(["./application", "./testEdition", "./testRun", "./routing", "./admin"], 
 
 	function() {
 

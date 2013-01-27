@@ -48,6 +48,11 @@ define([
 	routing.gotoEditTest = function(testId) { $(routingEventDispatcher).trigger(constants.STATE_EDIT_TEST, [testId]) }; 
 	crossroads.addRoute('#editTest?testId={testId}', routing.gotoEditTest);
 	
+	// Admin page
+	ui.gotoAdmin = function() { changePage("admin"); };
+	routing.gotoAdmin = function() { $(routingEventDispatcher).trigger(constants.STATE_ADMIN) }; 
+	crossroads.addRoute('#admin', routing.gotoAdmin);
+	
 	/** Helper function to change the location according to requested page */
 	function changePage(newHash) {
 		location.hash = newHash;

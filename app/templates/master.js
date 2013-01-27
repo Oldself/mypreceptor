@@ -6,7 +6,8 @@ define(
 		"text!./editTest.html",
 		"text!./home.html",
 		"text!./listTests.html",
-		"text!./runTest.html"
+		"text!./runTest.html",
+		"text!./admin.html"
 	], 
 	function () {
 		for (var i = 0; i < arguments.length; i++) {

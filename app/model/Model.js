@@ -6,6 +6,7 @@ define(["./constants"], function(constants) {
 	    self.isTouchDevice = "ontouchstart" in document.documentElement;
 	    
 		self.userNickname = ko.observable();
+		self.isAdmin = ko.observable(false);
 	    self.logoutUrl = ko.observable("");
 
 		self.testVOs = ko.observableArray();
@@ -20,6 +21,7 @@ define(["./constants"], function(constants) {
 		// attachment point for functions that can be called from the UI
 		self.ui = {};
 		
+		self.rawText = ko.observable("");		
 	};
 	
 	// Le module est une instance du modèle

@@ -18,12 +18,15 @@ function(constants, model, delegate) {
 	/** Apply the state and the jQM enhancements */
 	application.updateDisplay = function() {
 		$(document).trigger("create");
+		$("[data-role=listview]").listview("refresh");
 	};
 	
 	application.init = function() {
 		delegate.init(function (loginInfos){
 			model.userNickname(loginInfos[0]);
 			model.logoutUrl(loginInfos[1]);
+			model.isAdmin(loginInfos[2]);
+			application.updateDisplay();
 		});
 	}
 	

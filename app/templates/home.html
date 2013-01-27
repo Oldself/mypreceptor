@@ -4,6 +4,9 @@
 	<p/>
 	<ul data-role="listview">
 		<li><a data-bind="event:{click:ui.gotoTestList}">voir mes tests</a></li>
+		<!-- ko if: isAdmin -->
+			<li><a data-bind="event:{click:ui.gotoAdmin}">admin</a></li>
+		<!-- /ko -->
 	</ul>
 	<p/>
 	<p><a data-role="button" data-inline="true" data-mini="true" data-bind="event:{click:ui.logout}">se déconnecter</a>

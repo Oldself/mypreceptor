@@ -88,12 +88,28 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 		});
 	};
 	
+	/** ADMIN: list users */
+	delegate.listUsers = function (success, error) {
+		$.ajax({
+			url: constants.SERVER_URL,
+			data: {
+				action:		'listUsers'
+			},
+			cache: false,
+			success: function(result) {
+				checkAuth(result);
+				success(result);
+			},
+			error: error ? error : delegate.genericErrorHandler,
+			dataType: "text"
+		});
+	};
+	
 	delegate.genericErrorHandler = function(jqXHR, textStatus, errorThrown) { 
 		alert("X:"+textStatus + " " + errorThrown);
 	};
 	
 	function checkAuth(result) {
-		console.log("CHECK AUTH");
 		if (result instanceof Array && result.length && result[0] == "AUTHENTICATE")
 			location.href = result[1];
 	}
