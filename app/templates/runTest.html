@@ -8,7 +8,7 @@
 		<div class="ui-body ui-body-a">
 		<!-- ko with: testItemVO -->
 			<div data-bind="visible:normalizedInput() != normalizedResponse()">
-				<div data-bind="text: question"></div>
+				<div data-bind="text: getQuestion"></div>
 				<!-- ko if: $root.autoFocus() -->
 					<input data-bind="value:input, valueUpdate:'afterkeydown', hasfocus:normalizedInput() != normalizedResponse()"/>
 				<!-- /ko -->
@@ -17,7 +17,7 @@
 				<!-- /ko -->
 				<div data-role="collapsible" data-collapsed="true" data-theme="a" data-content-theme="b">
 					<h3>Voir le résultat</h3>
-					<p data-bind="text: response"></p>
+					<p data-bind="text: getResponse"></p>
 					<div class="ui-grid-a">
 						<div class="ui-block-a"><button data-mini="true" data-bind="event: {click: $root.ui.responseOK}">OK</button></div>
 						<div class="ui-block-b"><button data-mini="true" data-bind="event: {click: $root.ui.responseNOK}">à refaire</button></div>
@@ -42,6 +42,10 @@
 		<label>
 			<input type="checkbox" data-bind="checked:$root.testVO().diacriticalSensitive" data-mini="true"/>
 			contrôler les accents et minuscules
+		</label>
+		<label>
+			<input type="checkbox" data-bind="checked:$root.testVO().reversedQA" data-mini="true"/>
+			inverser question et réponse
 		</label>
 	</div>
 </script>

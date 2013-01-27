@@ -9,6 +9,7 @@ define(["./constants", "./TestItemVO"], function(constants, TestItemVO) {
 		self.title = ko.observable("sans titre");
 		self.testItemVOs = ko.observableArray();
 		self.diacriticalSensitive = ko.observable(false);
+		self.reversedQA = ko.observable(false);
 		
 		self.totalTestItems = ko.computed(function() {
 			return self.testItemVOs().length;
