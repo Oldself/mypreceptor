@@ -88,6 +88,20 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 		});
 	};
 	
+	/** get any html page */
+	delegate.getHtml = function (url, success, error) {
+		$.ajax({
+			url: url,
+			cache: false,
+			success: function(result) {
+				checkAuth(result);
+				success(result);
+			},
+			error: error ? error : delegate.genericErrorHandler,
+			dataType: "text"
+		});
+	};
+	
 	/** ADMIN: list users */
 	delegate.listUsers = function (success, error) {
 		$.ajax({

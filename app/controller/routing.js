@@ -49,9 +49,9 @@ define([
 	crossroads.addRoute('#editTest?testId={testId}', routing.gotoEditTest);
 	
 	// Admin page
-	ui.gotoAdmin = function() { changePage("admin"); };
-	routing.gotoAdmin = function() { $(routingEventDispatcher).trigger(constants.STATE_ADMIN) }; 
-	crossroads.addRoute('#admin', routing.gotoAdmin);
+	ui.gotoAdmin = function(info) { changePage("admin?info=" + info); };
+	routing.gotoAdmin = function(info) { $(routingEventDispatcher).trigger(constants.STATE_ADMIN, [info]) }; 
+	crossroads.addRoute('#admin?info={info}', routing.gotoAdmin);
 	
 	/** Helper function to change the location according to requested page */
 	function changePage(newHash) {

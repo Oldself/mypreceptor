@@ -6,12 +6,18 @@ function(constants, model, delegate, application) {
 	
 
 	/** Handler for the event requesting to show the admin page. */
-	$(application).bind(constants.STATE_ADMIN, function(event) {
+	$(application).bind(constants.STATE_ADMIN, function(event, info) {
 		console.log("admin");
-		delegate.listUsers(function(result) {
-			model.rawText(result);
-			application.setState(constants.STATE_ADMIN);
-		});
+		if (info == "listUsers")
+			delegate.listUsers(function(result) {
+				model.rawHtml("<pre>" + result + "</pre>");
+				application.setState(constants.STATE_ADMIN);
+			});
+		else if (info == "releaseNotes")
+			delegate.getHtml("/fr/ReleaseNotes.html", function(result) {
+				model.rawHtml(result);
+				application.setState(constants.STATE_ADMIN);
+			});
 	});
 	
 	return admin;

@@ -21,7 +21,7 @@ define(["./constants"], function(constants) {
 		// attachment point for functions that can be called from the UI
 		self.ui = {};
 		
-		self.rawText = ko.observable("");		
+		self.rawHtml = ko.observable("");		
 	};
 	
 	// Le module est une instance du modèle
