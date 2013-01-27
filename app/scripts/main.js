@@ -14,6 +14,8 @@ require([	"../model/Model",
 		) {
 
 	$(document).ready(function() {
+		if (!window.console)
+			window.console = {log: function() {}};
 		console.log("allez hop, on envoie la purée");
 		
 		// inject into the model the constants and controller functions
@@ -33,14 +35,12 @@ require([	"../model/Model",
 		$(document).bind( "pagebeforechange", onBeforePageChange);
 		
 		application.init();
-		//application.setState(constants.STATE_HOME);
 			
 		/**
 		 * This function is called by jQueryMobile each time 
 		 * a new URL is clicked or changed by the browser 
 		 */
 		function onBeforePageChange (e, data) {
-			console.log("PAGE BEFORE CHANGE", data);
 			e && e.preventDefault();
 			// if the page change was hijacked by jQM, then expected HREF is data.toPage
 			// else if the change was initiated by the browser (e.g. back) then we take the HREF from the location 

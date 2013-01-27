@@ -27,6 +27,7 @@ define([
 	ui.gotoHome = function() { application.setState(constants.STATE_HOME);};
 	routing.gotoHome = ui.gotoHome;
 	crossroads.addRoute('', routing.gotoHome);
+	crossroads.addRoute('#', routing.gotoHome);		// needed for IE8
 	
 	// List tests for a user
 	ui.gotoTestList = function() { changePage("listTests"); };
