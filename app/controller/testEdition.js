@@ -50,8 +50,9 @@ define(["../model/constants","./delegate","../model/TestVO", "../model/Model", "
 	
 	/** Capture tab on last input field to add new empty test item */
 	ui.onKeyDown = function(testItemVO, event) {
+		var charCode = (typeof event.which == "number") ? event.which : event.keyCode;	// cross-browser !
 		// tab was pressed
-		if (event.keyCode == 9 && !event.shiftKey) {
+		if (charCode == 9 && !event.shiftKey) {
 			var testItemVOs = model.testVO().testItemVOs;
 			if (testItemVOs.indexOf(testItemVO) == testItemVOs().length-1)
 				model.testVO().addEmptyTestItems(1);

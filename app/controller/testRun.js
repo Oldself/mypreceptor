@@ -29,7 +29,8 @@ define(["../model/constants","./delegate","../model/TestVO", "../model/Model", "
 	
 	/** When user press enter or space when result is shown as exact, proceed to next test. */
 	$(document).bind("keypress", function(event) {
-		if ((event.keyCode == 13 || event.keyCode == 32) && model.mainState() == constants.STATE_RUN_TEST) {
+		var charCode = (typeof event.which == "number") ? event.which : event.keyCode;	// cross-browser !
+		if ((charCode == 13 || charCode == 32) && model.mainState() == constants.STATE_RUN_TEST) {
 			var testItemVO = model.testItemVO();
 			if (testItemVO && testItemVO.normalizedInput() == testItemVO.normalizedResponse() && model.testVO().nbUnrespondedTestItem()!=0)
 				ui.responseOK(testItemVO);
