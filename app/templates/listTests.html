@@ -2,7 +2,8 @@
 	<div id="testsList">
 		<ul  data-role="listview"  data-split-icon="gear" data-bind="foreach: testVOs">
 			<li><a data-bind="text: title, event:{click:$root.ui.gotoRunTest}"></a>
-				<a data-bind="event:{click:$root.ui.gotoEditTest}">edit</a>
+				<!-- href="#" allows to click the icone on Firefox -->
+				<a href="#" data-bind="event:{click:$root.ui.gotoEditTest}">edit</a>
 			</li>
 		</ul>
 		<p/>
