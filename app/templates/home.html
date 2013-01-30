@@ -10,7 +10,8 @@
 		<!-- /ko -->
 	</ul>
 	<p/>
-	<p><a data-role="button" data-inline="true" data-mini="true" data-bind="event:{click:ui.logout}">se déconnecter</a>
-	</div>
+	<p/>
+	<a data-role="button" data-inline="true" data-mini="true" data-bind="visible: isAuthenticated, event:{click:ui.logout}">se déconnecter</a>
+	<a data-role="button" data-inline="true" data-mini="true" data-bind="visible: !isAuthenticated(), event:{click:ui.logout}">se connecter</a>
 	
 </script>

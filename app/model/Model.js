@@ -7,6 +7,8 @@ define(["./constants"], function(constants) {
 	    
 		self.userNickname = ko.observable();
 		self.isAdmin = ko.observable(false);
+		self.isAuthenticated = ko.observable(false);
+	    self.loginUrl = ko.observable("");
 	    self.logoutUrl = ko.observable("");
 
 		self.testVOs = ko.observableArray();

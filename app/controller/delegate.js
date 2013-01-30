@@ -12,7 +12,7 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			data: {'action':'init'},
 			cache: false,
 			success: function (loginInfos){
-				checkAuth(loginInfos);
+				// here we do not have to check for authentication, the caller takes care of it
 				success(loginInfos);
 			},
 			error: error ? error : delegate.genericErrorHandler,
@@ -124,9 +124,17 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 	};
 	
 	function checkAuth(result) {
-		if (result instanceof Array && result.length && result[0] == "AUTHENTICATE")
-			location.href = result[1];
+		var authLink = delegate.getAuthLink(result);
+		if (authLink)
+			location.href = authLink;
 	}
+	
+	delegate.getAuthLink = function(result) {
+		if (result instanceof Array && result.length && result[0] == "AUTHENTICATE")
+			return result[1];
+		return false;
+	};
+	
 	
 	return delegate;
 	

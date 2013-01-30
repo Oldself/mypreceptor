@@ -20,9 +20,16 @@ def getTestVO(user, testId):
 
 class MyHandler(webapp.RequestHandler):
     def get(self):
-        #
-        # we want the user to be authenticated
-        #
+        #----------------------------------------------------
+        # functions for any user, even not authenticated
+        #----------------------------------------------------
+        
+        
+        
+        #----------------------------------------------------
+        # from here an identified user is required
+        #----------------------------------------------------
+
         user = users.get_current_user()
         if not(user):
             #self.response.out.write("<html><body>Authentifiez vous d'abord</body></html>");
@@ -41,6 +48,8 @@ class MyHandler(webapp.RequestHandler):
             for testVO in testVOs:
                 result.append([testVO.id, testVO.title])
             self.response.out.write(json.dumps(result));
+            return
+        
         #
         # SAVE
         #
@@ -54,6 +63,8 @@ class MyHandler(webapp.RequestHandler):
             testVO.title = self.request.get('title')
             testVO.save()   # create or update
             self.response.out.write(json.dumps(testId))
+            return
+        
         #
         # GET
         #
@@ -61,6 +72,8 @@ class MyHandler(webapp.RequestHandler):
             testVO = getTestVO(user, testId)
             if testVO:
                 self.response.out.write(testVO.content);
+            return
+        
         #
         # DELETE
         #
@@ -69,31 +82,35 @@ class MyHandler(webapp.RequestHandler):
             if testVO:
                 testVO.delete();
                 self.response.out.write(json.dumps("ok"))
+            return
+        
         #
         # INIT
         #
         if action == "init":
-            result = [user.nickname(), users.create_logout_url("/app/index.html"), users.is_current_user_admin()]    
+            result = [user.nickname(), users.create_logout_url("/app/index.html"), users.create_login_url("/app/index.html"), users.is_current_user_admin()]    
             self.response.out.write(json.dumps(result))
+            return
             
         #----------------------------------------------------
         # From here, only admin is allowed
         #----------------------------------------------------
 
-        if users.is_current_user_admin():
+        if not(users.is_current_user_admin()):
+            return
             
-            if action == "listUsers":
-                testVOs = TestVO.all();
-                byUser = {};
-                for testVO in testVOs:
-                    if testVO.author.nickname() in byUser:
-                        byUser[testVO.author.nickname()] += 1
-                    else:
-                        byUser[testVO.author.nickname()] = 1
-                result = []
-                for key, value in byUser.iteritems():
-                    result.append([key, value])
-                self.response.out.write(json.dumps(result))
+        if action == "listUsers":
+            testVOs = TestVO.all();
+            byUser = {};
+            for testVO in testVOs:
+                if testVO.author.nickname() in byUser:
+                    byUser[testVO.author.nickname()] += 1
+                else:
+                    byUser[testVO.author.nickname()] = 1
+            result = []
+            for key, value in byUser.iteritems():
+                result.append([key, value])
+            self.response.out.write(json.dumps(result))
             
 #        if action == "aloha":
 #            tests = json.loads(aloha)

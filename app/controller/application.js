@@ -21,11 +21,24 @@ function(constants, model, delegate) {
 		$("[data-role=listview]").listview("refresh");
 	};
 	
+	/** This function is called only once when application initializes. */
 	application.init = function() {
-		delegate.init(function (loginInfos){
-			model.userNickname(loginInfos[0]);
-			model.logoutUrl(loginInfos[1]);
-			model.isAdmin(loginInfos[2]);
+		delegate.init(function (loginInfos) {
+			var authLink = delegate.getAuthLink(loginInfos);
+			if (authLink) {
+				model.isAuthenticated(false);
+				model.loginUrl(authLink);
+				model.ui.gotoHome();
+				model.userNickname("demo");
+				model.isAdmin(false);
+			}
+			else {
+				model.isAuthenticated(true);
+				model.userNickname(loginInfos[0]);
+				model.logoutUrl(loginInfos[1]);
+				model.loginUrl(loginInfos[2]);
+				model.isAdmin(loginInfos[3]);
+			}
 			application.updateDisplay();
 		});
 	}
