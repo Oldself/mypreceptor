@@ -8,6 +8,7 @@ define({
 	STATE_RUN_TEST : 		"_STATE_RUN_TEST_",
 	STATE_ADMIN : 			"_STATE_ADMIN_",
 	
-	SERVER_URL : 			"../server"
+	SERVER_URL : 			"../server",
+	HOME_PAGE : "/app/index.html"
 
 });

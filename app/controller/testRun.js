@@ -7,14 +7,13 @@ define(["../model/constants","./delegate","../model/TestVO", "../model/Model", "
 	var ui = testRun.ui = {};
 	
 	/** Handler for the event requesting to display the list of tests. */
-	$(application).bind(constants.STATE_LIST_TESTS, function(event) {
-		delegate.getUserTests(function(jsTestVOs) {
+	$(application).bind(constants.STATE_LIST_TESTS, function(event, data) {
+		delegate.getUserTests(data=="demo", function(jsTestVOs) {
 			jsTestVOs.sort(function(a, b) {return a.title() > b.title() ? 1 : -1});
 			model.testVOs.removeAll();
 			for (var i=0; i<jsTestVOs.length; i++)
 				model.testVOs.push(jsTestVOs[i]);
 			application.setState(constants.STATE_LIST_TESTS);
-
 		});
 	});
 	

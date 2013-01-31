@@ -3,14 +3,13 @@
 	<p data-bind="text:userNickname"></p>
 	<p/>
 	<ul data-role="listview">
-		<li><a data-bind="event:{click:ui.gotoTestList}">voir mes tests</a></li>
+		<li><a href="#listTestsDemo">essayer la démo</a></li>
+		<li data-bind="visible:isAuthenticated()"><a href="#listTests"">voir mes tests</a></li>
 		<li><a href="#admin?info=releaseNotes">notes de version</a></li>
-		<!-- ko if: isAdmin -->
-			<li><a href="#admin?info=listUsers">Admin: liste des utilisateurs</a></li>
-		<!-- /ko -->
+		<li data-bind="visible:isAdmin"><a href="#admin?info=listUsers">Admin: liste des utilisateurs</a></li>
 	</ul>
 	<p/>
 	<a data-role="button" data-inline="true" data-mini="true" data-bind="visible: isAuthenticated, event:{click:ui.logout}">se déconnecter</a>
-	<a data-role="button" data-inline="true" data-mini="true" data-bind="visible: !isAuthenticated(), event:{click:ui.logout}">se connecter</a>
+	<a data-role="button" data-inline="true" data-mini="true" data-bind="visible: !isAuthenticated(), event:{click:ui.login}">se connecter</a>
 	
 </script>

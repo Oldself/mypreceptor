@@ -4,6 +4,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 
+HOME_PAGE = "/app/index.html"
+
 class TestVO(db.Model):
     id = db.StringProperty()
     title = db.StringProperty(default='no title')
@@ -20,24 +22,43 @@ def getTestVO(user, testId):
 
 class MyHandler(webapp.RequestHandler):
     def get(self):
+        action = self.request.get('action')
+        user = users.get_current_user()
+        
         #----------------------------------------------------
         # functions for any user, even not authenticated
         #----------------------------------------------------
         
-        
-        
+        #
+        # INIT
+        #
+        if action == "init":
+            username = user.nickname() if user else "demo"
+            isAuthenticated = not(not(user))
+            result = [isAuthenticated, username, users.create_logout_url(HOME_PAGE), users.create_login_url(HOME_PAGE), users.is_current_user_admin()]
+            self.response.out.write(json.dumps(result))
+            return
+            
+        #
+        # GET DEMO TESTS
+        #
+        if action=="getDemoTests":
+            testVOs = TestVO.gql("WHERE title > :1 AND title < :2 ORDER BY title ASC LIMIT 100", "Demo", "Demp")
+            result = [];
+            for testVO in testVOs:
+                if (testVO.author.nickname() in ["francois.losfeld", "test@example.com"]):
+                    result.append([testVO.id, testVO.title])
+            self.response.out.write(json.dumps(result));
+            return
+            
         #----------------------------------------------------
         # from here an identified user is required
         #----------------------------------------------------
 
-        user = users.get_current_user()
         if not(user):
-            #self.response.out.write("<html><body>Authentifiez vous d'abord</body></html>");
-            result = ["AUTHENTICATE", users.create_login_url("/app/index.html")]
-            self.response.out.write(json.dumps(result))
+            self.response.out.write(json.dumps("AUTHENTICATE"))
             return
         
-        action = self.request.get('action')
         testId = self.request.get('testId')
         #
         # GET LIST
@@ -84,14 +105,6 @@ class MyHandler(webapp.RequestHandler):
                 self.response.out.write(json.dumps("ok"))
             return
         
-        #
-        # INIT
-        #
-        if action == "init":
-            result = [user.nickname(), users.create_logout_url("/app/index.html"), users.create_login_url("/app/index.html"), users.is_current_user_admin()]    
-            self.response.out.write(json.dumps(result))
-            return
-            
         #----------------------------------------------------
         # From here, only admin is allowed
         #----------------------------------------------------

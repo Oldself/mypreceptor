@@ -29,12 +29,12 @@ require([	"../model/Model",
 		window.model = model; 
 
 		ko.applyBindings(model);
+		application.init();
 		
 		// Force the handling of current URL
 		onBeforePageChange(undefined, {toPage:location.href});
 		$(document).bind( "pagebeforechange", onBeforePageChange);
 		
-		application.init();
 			
 		/**
 		 * This function is called by jQueryMobile each time 

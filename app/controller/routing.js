@@ -30,9 +30,14 @@ define([
 	crossroads.addRoute('#', routing.gotoHome);		// needed for IE8
 	
 	// List tests for a user
-	ui.gotoTestList = function() { changePage("listTests"); };
+	ui.gotoTestList = function(arg) { changePage("listTests"); };
 	routing.gotoTestList = function () { $(routingEventDispatcher).trigger(constants.STATE_LIST_TESTS); };
 	crossroads.addRoute('#listTests', routing.gotoTestList);
+
+	// List demo tests
+	ui.gotoTestListDemo = function() { changePage("listTestsDemo"); };
+	routing.gotoTestListDemo = function () { $(routingEventDispatcher).trigger(constants.STATE_LIST_TESTS, ["demo"]); };
+	crossroads.addRoute('#listTestsDemo', routing.gotoTestListDemo);
 	
 	// Run a test
 	ui.gotoRunTest = function(testVO) { changePage("runTest?testId=" + testVO.id());	};

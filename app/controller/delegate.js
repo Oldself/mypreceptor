@@ -21,10 +21,10 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 	};
 	
 	/** Get user tests list */
-	delegate.getUserTests = function(success, error) {
+	delegate.getUserTests = function(isForDemo, success, error) {
 		$.ajax({
 			url: constants.SERVER_URL,
-			data: {'action':'getUserTests'},
+			data: {'action': isForDemo ? 'getDemoTests' : 'getUserTests'},
 			cache: false,
 			success: function (jsTestList){
 				checkAuth(jsTestList);
@@ -42,6 +42,7 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			data: {'action':'getTest', 'testId':testId},
 			cache: false,
 			success: function(jsonTestVO) {
+				checkAuth(jsonTestVO);
 				success(mapper.testVO_fromJS(jsonTestVO));
 			},
 			error: error ? error : delegate.genericErrorHandler,
@@ -61,6 +62,7 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			},
 			cache: false,
 			success: function(testId) {
+				checkAuth(testId);
 				console.log(testId);
 				success(testId);
 			},
@@ -80,6 +82,7 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			},
 			cache: false,
 			success: function(result) {
+				checkAuth(result);
 				console.log(result);
 				success(result);
 			},
@@ -124,17 +127,9 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 	};
 	
 	function checkAuth(result) {
-		var authLink = delegate.getAuthLink(result);
-		if (authLink)
-			location.href = authLink;
+		if (result == "AUTHENTICATE")
+			location.href = constants.HOME_PAGE;
 	}
-	
-	delegate.getAuthLink = function(result) {
-		if (result instanceof Array && result.length && result[0] == "AUTHENTICATE")
-			return result[1];
-		return false;
-	};
-	
 	
 	return delegate;
 	
