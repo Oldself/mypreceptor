@@ -1,15 +1,32 @@
 <script id="homeTemplate" type="text/html">
 	
-	<p data-bind="text:userNickname"></p>
-	<p/>
+	<h2 data-bind="text:userNickname"></h2>
+	
+	<p class="topMargin">&nbsp;</p>
+	
 	<ul data-role="listview">
 		<li data-bind="visible:!isAuthenticated()"><a href="#listTestsDemo">essayer la démo</a></li>
 		<li data-bind="visible:isAuthenticated()"><a href="#listTests">voir mes tests</a></li>
 		<li><a href="#admin?info=releaseNotes">notes de version</a></li>
 		<li data-bind="visible:isAdmin"><a href="#admin?info=listUsers">Admin: liste des utilisateurs</a></li>
 	</ul>
-	<p/>
-	<a data-role="button" data-inline="true" data-mini="true" data-bind="visible: isAuthenticated, event:{click:ui.logout}">se déconnecter</a>
-	<a data-role="button" data-inline="true" data-mini="true" data-bind="visible: !isAuthenticated(), event:{click:ui.login}">se connecter</a>
 	
+	<p class="topMargin">&nbsp;</p>
+
+	<a data-role="button" data-inline="true" data-mini="true" 
+		data-bind="visible: isAuthenticated, event:{click:ui.logout}">se déconnecter</a>
+	<a data-role="button" data-inline="true" data-mini="true" 
+		data-bind="visible: !isAuthenticated(), event:{click:ui.login}">se connecter</a>
+	
+	<!-- ko ifnot: isAuthenticated -->
+	<div class="topMargin" data-role="collapsible" data-theme="a" data-content-theme="a">
+		<h3>Pas encore de compte ?</h3>
+		<p>Pour utiliser MyPreceptor, il suffit d'avoir un compte Google. C'est gratuit et rapide.
+			Vous pouvez garder votre adresse email habituelle ou en créer une spécialement, 
+			comme vous préférez.</p>
+		<p>La seule chose que MyPreceptor connaitra de vous, en plus des tests que vous allez
+			créer, c'est votre adresse email, mais, promis, il n'en sera fait aucun autre
+			usage que de vous permettre de vous connecter. Pas de mails, pas de spams.</p>
+	</div>
+	<!-- /ko -->
 </script>
