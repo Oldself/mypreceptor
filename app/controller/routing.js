@@ -24,13 +24,13 @@ define([
 	var routingEventDispatcher = application;
 	
 	// Home page
-	ui.gotoHome = function() { application.setState(constants.STATE_HOME);};
-	routing.gotoHome = ui.gotoHome;
+	ui.gotoHome = function() { changePage(""); };
+	routing.gotoHome = function () { application.setState(constants.STATE_HOME); }
 	crossroads.addRoute('', routing.gotoHome);
 	crossroads.addRoute('#', routing.gotoHome);		// needed for IE8
 	
 	// List tests for a user
-	ui.gotoTestList = function(arg) { changePage("listTests"); };
+	ui.gotoTestList = function() { changePage("listTests"); };
 	routing.gotoTestList = function () { $(routingEventDispatcher).trigger(constants.STATE_LIST_TESTS); };
 	crossroads.addRoute('#listTests', routing.gotoTestList);
 

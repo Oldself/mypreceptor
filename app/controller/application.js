@@ -11,8 +11,17 @@ function(constants, model, delegate) {
 	};
 	
 	ui.back = application.back = function() {
-		// TODO: ici il faut gérer vers quelle page on veut réellement remonter car en cas de lien profond, le back ne veut rien dire
-		history.back();
+		switch (model.mainState()) {
+			case constants.STATE_EDIT_TEST:
+			case constants.STATE_RUN_TEST:
+				if (model.isAuthenticated())
+					model.ui.gotoTestList();
+				else
+					model.ui.gotoTestListDemo();
+				break;
+			default:
+				model.ui.gotoHome();
+		}
 	};
 	
 	/** Apply the state and the jQM enhancements */
