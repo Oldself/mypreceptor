@@ -24,6 +24,7 @@ class MyHandler(webapp.RequestHandler):
     def get(self):
         action = self.request.get('action')
         user = users.get_current_user()
+        testId = self.request.get('testId')
         
         #----------------------------------------------------
         # functions for any user, even not authenticated
@@ -40,7 +41,7 @@ class MyHandler(webapp.RequestHandler):
             return
             
         #
-        # GET DEMO TESTS
+        # GET LIST OF DEMO TESTS
         #
         if action=="getDemoTests":
             testVOs = TestVO.gql("WHERE title > :1 AND title < :2 ORDER BY title ASC LIMIT 100", "Demo", "Demp")
@@ -50,6 +51,20 @@ class MyHandler(webapp.RequestHandler):
                     result.append([testVO.id, testVO.title])
             self.response.out.write(json.dumps(result));
             return
+        
+        #
+        # GET A DEMO TEST
+        # We assume that an unauthenticated user requesting a test wants a demo test
+        # If we cannot find the demo test, it is a disconnected user refreshing a page,
+        # he will later have to authenticate.
+        #
+        if action=="getTest" and not(user):
+            testVOs = TestVO.gql("WHERE id = :1 AND title > :2 AND title < :3 LIMIT 1", testId, "Demo", "Demp")
+            for testVO in testVOs:
+                if (testVO.author.nickname() in ["francois.losfeld", "test@example.com"]):
+                    self.response.out.write(testVO.content)
+                    return
+            
             
         #----------------------------------------------------
         # from here an identified user is required
@@ -59,7 +74,6 @@ class MyHandler(webapp.RequestHandler):
             self.response.out.write(json.dumps("AUTHENTICATE"))
             return
         
-        testId = self.request.get('testId')
         #
         # GET LIST
         #

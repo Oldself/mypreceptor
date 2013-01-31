@@ -27,8 +27,8 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			data: {'action': isForDemo ? 'getDemoTests' : 'getUserTests'},
 			cache: false,
 			success: function (jsTestList){
-				checkAuth(jsTestList);
-				success(mapper.testVOs_fromJS(jsTestList));
+				if (checkAuth(jsTestList))
+					success(mapper.testVOs_fromJS(jsTestList));
 			},
 			error: error ? error : delegate.genericErrorHandler,
 			dataType: "json"
@@ -42,8 +42,8 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			data: {'action':'getTest', 'testId':testId},
 			cache: false,
 			success: function(jsonTestVO) {
-				checkAuth(jsonTestVO);
-				success(mapper.testVO_fromJS(jsonTestVO));
+				if (checkAuth(jsonTestVO))
+					success(mapper.testVO_fromJS(jsonTestVO));
 			},
 			error: error ? error : delegate.genericErrorHandler,
 			dataType: "json"
@@ -62,9 +62,8 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			},
 			cache: false,
 			success: function(testId) {
-				checkAuth(testId);
-				console.log(testId);
-				success(testId);
+				if (checkAuth(testId))
+					success(testId);
 			},
 			error: error ? error : delegate.genericErrorHandler,
 			dataType: "json",
@@ -82,9 +81,8 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			},
 			cache: false,
 			success: function(result) {
-				checkAuth(result);
-				console.log(result);
-				success(result);
+				if (checkAuth(result))
+					success(result);
 			},
 			error: error ? error : delegate.genericErrorHandler,
 			dataType: "text"
@@ -97,8 +95,8 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			url: url,
 			cache: false,
 			success: function(result) {
-				checkAuth(result);
-				success(result);
+				if (checkAuth(result))
+					success(result);
 			},
 			error: error ? error : delegate.genericErrorHandler,
 			dataType: "text"
@@ -114,8 +112,8 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			},
 			cache: false,
 			success: function(result) {
-				checkAuth(result);
-				success(result);
+				if (checkAuth(result))
+					success(result);
 			},
 			error: error ? error : delegate.genericErrorHandler,
 			dataType: "json"
@@ -127,8 +125,11 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 	};
 	
 	function checkAuth(result) {
-		if (result == "AUTHENTICATE")
+		if (result == "AUTHENTICATE") {
 			location.href = constants.HOME_PAGE;
+			return false;
+		}
+		return true;
 	}
 	
 	return delegate;

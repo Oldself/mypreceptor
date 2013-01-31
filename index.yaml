@@ -20,3 +20,8 @@ indexes:
   properties:
   - name: author
   - name: title
+
+- kind: TestVO
+  properties:
+  - name: id
+  - name: title
