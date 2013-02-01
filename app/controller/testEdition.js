@@ -43,8 +43,7 @@ define(["../model/constants","./delegate","../model/TestVO", "../model/Model", "
 		$("#deleteTestConfirmPopup").popup('close');
 		delegate.deleteTest(model.testVO().id(), function() {
 			model.testVO(undefined);
-			// TODO: a voir: normalement on ne devrait pas passer par model.ui
-			model.ui.gotoTestList();
+			application.back();
 		});
 	};
 	

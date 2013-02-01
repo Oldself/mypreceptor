@@ -10,18 +10,13 @@ function(constants, model, delegate) {
 		application.updateDisplay();
 	};
 	
+	/**
+	 * Handler for "our" back button. We want the user to be able
+	 * to use our back button or the browser back button, so
+	 * we do the same thing.
+	 */
 	ui.back = application.back = function() {
-		switch (model.mainState()) {
-			case constants.STATE_EDIT_TEST:
-			case constants.STATE_RUN_TEST:
-				if (model.isAuthenticated())
-					model.ui.gotoTestList();
-				else
-					model.ui.gotoTestListDemo();
-				break;
-			default:
-				model.ui.gotoHome();
-		}
+		history.back();
 	};
 	
 	/** Apply the state and the jQM enhancements */
