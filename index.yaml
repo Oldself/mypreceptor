@@ -25,3 +25,8 @@ indexes:
   properties:
   - name: id
   - name: title
+
+- kind: TestVO
+  properties:
+  - name: isDemo
+  - name: title

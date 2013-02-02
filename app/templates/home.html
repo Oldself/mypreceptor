@@ -5,8 +5,8 @@
 	<p class="topMargin">&nbsp;</p>
 	
 	<ul data-role="listview">
-		<li data-bind="visible:!isAuthenticated()"><a href="#listTestsDemo">essayer la démo</a></li>
-		<li data-bind="visible:isAuthenticated()"><a href="#listTests">voir mes tests</a></li>
+		<li><a data-bind="css:{'ui-disabled':!isAuthenticated()}" href="#listTests">voir mes tests</a></li>
+		<li><a href="#listTestsDemo">voir les tests de démo</a></li>
 		<li><a href="#admin?info=releaseNotes">notes de version</a></li>
 		<li data-bind="visible:isAdmin"><a href="#admin?info=listUsers">Admin: liste des utilisateurs</a></li>
 	</ul>

@@ -11,14 +11,14 @@ class TestVO(db.Model):
     title = db.StringProperty(default='no title')
     author = db.UserProperty()
     content = db.BlobProperty()
+    isDemo = db.BooleanProperty(default=False)
     
-def getTestVO(user, testId):
+def getTestVO(testId):
     """Return the stored TestVO or None."""
-    if not(user):
-        return None
-    testVOs = TestVO.gql("WHERE author = :1 AND id = :2 ORDER BY title ASC LIMIT 100", user, testId)
+    testVOs = TestVO.gql("WHERE id=:1 LIMIT 1", testId)
     for testVO in testVOs:      # un peu boeuf, peut mieux faire !
         return testVO
+    return None
 
 class MyHandler(webapp.RequestHandler):
     def get(self):
@@ -44,27 +44,25 @@ class MyHandler(webapp.RequestHandler):
         # GET LIST OF DEMO TESTS
         #
         if action=="getDemoTests":
-            testVOs = TestVO.gql("WHERE title > :1 AND title < :2 ORDER BY title ASC LIMIT 100", "Demo", "Demp")
+            testVOs = TestVO.gql("WHERE isDemo=True ORDER BY title ASC LIMIT 100")
             result = [];
             for testVO in testVOs:
-                if (testVO.author.nickname() in ["francois.losfeld", "test@example.com"]):
-                    result.append([testVO.id, testVO.title])
+                result.append([testVO.id, testVO.title])
             self.response.out.write(json.dumps(result));
             return
         
         #
         # GET A DEMO TEST
-        # We assume that an unauthenticated user requesting a test wants a demo test
-        # If we cannot find the demo test, it is a disconnected user refreshing a page,
-        # he will later have to authenticate.
+        # An unauthenticated user can only request a demo test.
+        # There might also be the case of a user requesting one of his test,
+        # but he has been disconnected. This will be caught later 
+        # and he will be requested to authenticate
         #
         if action=="getTest" and not(user):
-            testVOs = TestVO.gql("WHERE id = :1 AND title > :2 AND title < :3 LIMIT 1", testId, "Demo", "Demp")
-            for testVO in testVOs:
-                if (testVO.author.nickname() in ["francois.losfeld", "test@example.com"]):
-                    self.response.out.write(testVO.content)
-                    return
-            
+            testVO = getTestVO(testId)
+            if testVO and testVO.isDemo:
+                self.response.out.write(testVO.content)     # Note: content is already json
+                return
             
         #----------------------------------------------------
         # from here an identified user is required
@@ -89,13 +87,16 @@ class MyHandler(webapp.RequestHandler):
         # SAVE
         #
         if action == "saveTest":
-            testVO = getTestVO(user, testId)
+            testVO = getTestVO(testId)
+            if (testVO and testVO.author!=user):        # only the test owner can modify it ! 
+                return
             if not(testVO):
                 testVO = TestVO()
                 testVO.id = testId
                 testVO.author = user
             testVO.content = self.request.get('testDTO').encode('utf-8')
             testVO.title = self.request.get('title')
+            testVO.isDemo = testVO.title.startswith("Demo") and users.is_current_user_admin()
             testVO.save()   # create or update
             self.response.out.write(json.dumps(testId))
             return
@@ -104,17 +105,17 @@ class MyHandler(webapp.RequestHandler):
         # GET
         #
         if (action == "getTest"):
-            testVO = getTestVO(user, testId)
-            if testVO:
-                self.response.out.write(testVO.content);
+            testVO = getTestVO(testId)
+            if testVO and (testVO.author==user or testVO.isDemo):
+                self.response.out.write(testVO.content)     # Note: content is already json
             return
         
         #
         # DELETE
         #
         if action == "deleteTest":
-            testVO = getTestVO(user, testId)
-            if testVO:
+            testVO = getTestVO(testId)
+            if testVO and testVO.author==user:
                 testVO.delete();
                 self.response.out.write(json.dumps("ok"))
             return
@@ -143,7 +144,7 @@ class MyHandler(webapp.RequestHandler):
 #            tests = json.loads(aloha)
 #            for test in tests:
 #                testId = test['id']
-#                testVO = getTestVO(user, testId)
+#                testVO = getTestVO(testId)
 #                if not(testVO):
 #                    testVO = TestVO()
 #                    testVO.id = testId
@@ -156,7 +157,7 @@ class MyHandler(webapp.RequestHandler):
 #            tests = json.loads(aglae)
 #            for test in tests:
 #                testId = test['id']
-#                testVO = getTestVO(user, testId)
+#                testVO = getTestVO(testId)
 #                if not(testVO):
 #                    testVO = TestVO()
 #                    testVO.id = testId

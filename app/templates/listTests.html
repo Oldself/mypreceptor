@@ -6,7 +6,11 @@
 				<a href="#" data-bind="event:{click:$root.ui.gotoEditTest}">edit</a>
 			</li>
 		</ul>
+		<div data-bind="visible:testVOs().length == 0">
+			<h2>Vous n'avez encore aucun test !</h2>
+			Pour en créer un, cliquez sur le bouton ci-dessous.
+		</div>
 		<p>&nbsp;</p>
-		<a data-role="button" data-inline="true" data-mini="true" data-bind="event:{click:ui.gotoNewTest}">nouveau test</a>
+		<a data-role="button" data-inline="true" data-mini="true" data-bind="event:{click:ui.gotoNewTest}">créer un nouveau test</a>
 	</div>
 </script>
