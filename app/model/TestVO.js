@@ -7,6 +7,7 @@ define(["./constants", "./TestItemVO"], function(constants, TestItemVO) {
 		var self = this;
 		self.id = ko.observable("" + (new Date()).getTime());			// default id = timeStamp in seconds, as a String
 		self.title = ko.observable("sans titre");
+		self.isAuthor = ko.observable(true);
 		self.testItemVOs = ko.observableArray();
 		self.diacriticalSensitive = ko.observable(false);
 		self.reversedQA = ko.observable(false);

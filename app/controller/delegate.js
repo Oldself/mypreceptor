@@ -42,8 +42,11 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			data: {'action':'getTest', 'testId':testId},
 			cache: false,
 			success: function(jsonTestVO) {
-				if (checkAuth(jsonTestVO))
-					success(mapper.testVO_fromJS(jsonTestVO));
+				if (checkAuth(jsonTestVO)) {
+					var testVO = mapper.testVO_fromJS($.parseJSON(jsonTestVO.content));
+					testVO.isAuthor(jsonTestVO.isAuthor);
+					success(testVO);
+				}
 			},
 			error: error ? error : delegate.genericErrorHandler,
 			dataType: "json"
