@@ -3,7 +3,7 @@
  */
 define(["./mapper", "../model/constants"], function(mapper, constants){
 	
-	var delegate = {}
+	var delegate = {};
 	
 	/** Init: get user login and logout url */
 	delegate.init = function(success, error) {

@@ -49,5 +49,15 @@ function(constants, model, delegate) {
 		location.href = model.loginUrl();
 	}
 	
+	$(document).ajaxStart(function() {
+		$.mobile.showPageLoadingMsg();		
+	});
+
+	$(document).ajaxStart(function() {
+		$.mobile.hidePageLoadingMsg();		
+	});
+	
+
+	
 	return application;
 });
