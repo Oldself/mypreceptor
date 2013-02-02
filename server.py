@@ -61,7 +61,7 @@ class MyHandler(webapp.RequestHandler):
         if action=="getTest" and not(user):
             testVO = getTestVO(testId)
             if testVO and testVO.isDemo:
-                self.response.out.write(testVO.content)     # Note: content is already json
+                self.response.out.write(json.dumps({'isAuthor':False, 'content':testVO.content}))     # Note: content is already json
                 return
             
         #----------------------------------------------------
@@ -107,7 +107,7 @@ class MyHandler(webapp.RequestHandler):
         if (action == "getTest"):
             testVO = getTestVO(testId)
             if testVO and (testVO.author==user or testVO.isDemo):
-                self.response.out.write(testVO.content)     # Note: content is already json
+                self.response.out.write(json.dumps({'isAuthor':testVO.author==user, 'content':testVO.content}))     # Note: content is already json
             return
         
         #
