@@ -7,15 +7,20 @@ define(["../model/constants","./delegate","../model/TestVO", "../model/Model", "
 	var ui = testRun.ui = {};
 	
 	/** Handler for the event requesting to display the list of tests. */
-	$(application).bind(constants.STATE_LIST_TESTS, function(event, data) {
-		delegate.getUserTests(data=="demo", function(jsTestVOs) {
+	$(application).bind(constants.STATE_LIST_TESTS, function() { getListTests(false, constants.STATE_LIST_DEMO_TESTS); });
+	
+	/** Handler for the event requesting to display the list of demo tests. */
+	$(application).bind(constants.STATE_LIST_DEMO_TESTS, function() { getListTests(true, constants.STATE_LIST_DEMO_TESTS); });
+	
+	function getListTests(isDemo, newState) {
+		delegate.getUserTests(isDemo, function(jsTestVOs) {
 			jsTestVOs.sort(function(a, b) {return a.title() > b.title() ? 1 : -1});
 			model.testVOs.removeAll();
 			for (var i=0; i<jsTestVOs.length; i++)
 				model.testVOs.push(jsTestVOs[i]);
-			application.setState(constants.STATE_LIST_TESTS);
+			application.setState(newState);
 		});
-	});
+	}
 	
 	/** Handler for the event requesting to run one test. */
 	$(application).bind(constants.STATE_RUN_TEST, function(event, testId) {

@@ -35,7 +35,7 @@
 		<!-- ko if: mainState() == STATE_HOME -->
 			<!-- ko template: {name:'homeTemplate' } --><!-- /ko -->
 		<!-- /ko -->
-		<!-- ko if: mainState() == STATE_LIST_TESTS -->
+		<!-- ko if: mainState() == STATE_LIST_TESTS || mainState() == STATE_LIST_DEMO_TESTS -->
 			<!-- ko template: {name:'listTestsTemplate' } --><!-- /ko -->
 		<!-- /ko -->
 		<!-- ko if: mainState() == STATE_RUN_TEST -->

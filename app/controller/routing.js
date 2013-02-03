@@ -36,7 +36,7 @@ define([
 
 	// List demo tests
 	ui.gotoTestListDemo = function() { changePage("listTestsDemo"); };
-	routing.gotoTestListDemo = function () { $(routingEventDispatcher).trigger(constants.STATE_LIST_TESTS, ["demo"]); };
+	routing.gotoTestListDemo = function () { $(routingEventDispatcher).trigger(constants.STATE_LIST_DEMO_TESTS); };
 	crossroads.addRoute('#listTestsDemo', routing.gotoTestListDemo);
 	
 	// Run a test

@@ -3,14 +3,18 @@
 		<ul  data-role="listview"  data-split-icon="gear" data-bind="foreach: testVOs">
 			<li><a data-bind="text: title, event:{click:$root.ui.gotoRunTest}"></a>
 				<!-- href="#" allows to click the icone on Firefox -->
-				<a href="#" data-bind="event:{click:$root.ui.gotoEditTest}">edit</a>
+				<!-- ko if: $root.mainState() != $root.STATE_LIST_DEMO_TESTS || !$root.isAuthenticated() -->
+					<a href="#" data-bind="event:{click:$root.ui.gotoEditTest}">edit</a>
+				<!-- /ko -->
 			</li>
 		</ul>
 		<div data-bind="visible:testVOs().length == 0">
 			<h2>Vous n'avez encore aucun test !</h2>
 			Pour en créer un, cliquez sur le bouton ci-dessous.
 		</div>
-		<p>&nbsp;</p>
-		<a data-role="button" data-inline="true" data-mini="true" data-bind="event:{click:ui.gotoNewTest}">créer un nouveau test</a>
+		<!-- ko if: mainState() != STATE_LIST_DEMO_TESTS || !isAuthenticated() -->
+			<p>&nbsp;</p>
+			<a data-role="button" data-inline="true" data-mini="true" data-bind="event:{click:ui.gotoNewTest}">créer un nouveau test</a>
+		<!-- /ko -->
 	</div>
 </script>
