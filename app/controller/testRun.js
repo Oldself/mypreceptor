@@ -7,7 +7,7 @@ define(["../model/constants","./delegate","../model/TestVO", "../model/Model", "
 	var ui = testRun.ui = {};
 	
 	/** Handler for the event requesting to display the list of tests. */
-	$(application).bind(constants.STATE_LIST_TESTS, function() { getListTests(false, constants.STATE_LIST_DEMO_TESTS); });
+	$(application).bind(constants.STATE_LIST_TESTS, function() { getListTests(false, constants.STATE_LIST_TESTS); });
 	
 	/** Handler for the event requesting to display the list of demo tests. */
 	$(application).bind(constants.STATE_LIST_DEMO_TESTS, function() { getListTests(true, constants.STATE_LIST_DEMO_TESTS); });

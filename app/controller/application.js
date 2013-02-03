@@ -30,7 +30,7 @@ function(constants, model, delegate) {
 	 * The routing mechanism will then take care of applying the right
 	 * start page. 
 	 */
-	application.init = function() {
+	application.init = function(forceGotoHomePageWhenUnAuthentified) {
 		delegate.init(function (loginInfos) {
 			model.isAuthenticated(loginInfos[0]);
 			model.userNickname(loginInfos[1]);
@@ -38,7 +38,19 @@ function(constants, model, delegate) {
 			model.loginUrl(loginInfos[3]);
 			model.isAdmin(loginInfos[4]);
 			application.updateDisplay();
+			if (!model.isAuthenticated() && forceGotoHomePageWhenUnAuthentified) {
+				alert("vous avez été déconnecté");
+				model.ui.gotoHome();
+			}
 		});
+	}
+	
+	/**
+	 * If user is currently authenticated, check that he still is
+	 */
+	application.checkAuthentication = function() {
+		if (model.isAuthenticated())
+			application.init(true);
 	}
 	
 	ui.logout = function() {

@@ -4,6 +4,7 @@ require([	"../model/Model",
 			"../scripts/crossroads.min",
 			"../model/constants", 
 			"../templates/master",
+			"./jquery.idle-timer"
 		], 
 		function(
 			model, 
@@ -35,6 +36,9 @@ require([	"../model/Model",
 		onBeforePageChange(undefined, {toPage:location.href});
 		$(document).bind( "pagebeforechange", onBeforePageChange);
 		
+		// Setup an idle timer to check for authentication when activity resumes after at least 5 min of idle time 
+		$(document).idleTimer(5*60*1000);
+		$(document).bind("active.idleTimer", application.checkAuthentication);
 			
 		/**
 		 * This function is called by jQueryMobile each time 

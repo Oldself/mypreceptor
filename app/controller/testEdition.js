@@ -4,14 +4,15 @@ define(["../model/constants","./delegate","../model/TestVO", "../model/Model", "
 	var testEdition = {};
 	var ui = testEdition.ui = {};
 
-	/** Handler for the event requesting to edit a test. */
+	/** Handler for the event requesting to edit a test, or create a new one. */
 	$(application).bind(constants.STATE_EDIT_TEST, function(event, testId) {
-		if (testId)
+		if (testId)		// edit existing one
 			delegate.getTest(testId, function(testVO) {
 				model.testVO(testVO);
 				application.setState(constants.STATE_EDIT_TEST);
 			});
-		else {
+		else {			// create new one
+			application.checkAuthentication();		// test that user is still connected
 			model.testVO(new TestVO());
 			model.testVO().addEmptyTestItems();
 			application.setState(constants.STATE_EDIT_TEST);
