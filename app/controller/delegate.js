@@ -43,7 +43,7 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 			cache: false,
 			success: function(jsonTestVO) {
 				if (checkAuth(jsonTestVO)) {
-					var testVO = mapper.testVO_fromJS($.parseJSON(jsonTestVO.content));
+					var testVO = mapper.testVO_fromJS($.parseJSON(decode_utf8(jsonTestVO.content)));
 					testVO.isAuthor(jsonTestVO.isAuthor);
 					success(testVO);
 				}
@@ -126,6 +126,10 @@ define(["./mapper", "../model/constants"], function(mapper, constants){
 	delegate.genericErrorHandler = function(jqXHR, textStatus, errorThrown) { 
 		alert("X:"+textStatus + " " + errorThrown);
 	};
+	
+	// utilities from http://ecmanaut.blogspot.fr/2006/07/encoding-decoding-utf8-in-javascript.html
+	function encode_utf8( s ) {   return unescape( encodeURIComponent( s ) ); }
+	function decode_utf8( s ) {	  return decodeURIComponent( escape( s ) );	}
 	
 	function checkAuth(result) {
 		if (result == "AUTHENTICATE") {
