@@ -1,4 +1,4 @@
-application: x2-custom-point-f
+application: mypreceptor
 version: 1-02
 runtime: python
 api_version: 1
