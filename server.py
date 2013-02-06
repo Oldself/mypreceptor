@@ -4,6 +4,11 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 
+#
+# Important note: the mechanism to generate test ids cannot be trusted, so two
+# tests might have the same id, for different users. We manage that in getTestVO.
+#
+
 HOME_PAGE = "/app/index.html"
 
 class TestVO(db.Model):
@@ -13,9 +18,13 @@ class TestVO(db.Model):
     content = db.BlobProperty()
     isDemo = db.BooleanProperty(default=False)
     
-def getTestVO(testId):
-    """Return the stored TestVO or None."""
-    testVOs = TestVO.gql("WHERE id=:1 LIMIT 1", testId)
+def getTestVO(testId, user):
+    """Return the stored TestVO for the user, or the demo test or None."""
+    testVOs = TestVO.gql("WHERE id=:1 AND author=:2 LIMIT 1", testId, user)
+    for testVO in testVOs:      # un peu boeuf, peut mieux faire !
+        return testVO
+    # test not found for user, let's check the demo tests
+    testVOs = TestVO.gql("WHERE id=:1 AND isDemo=true LIMIT 1", testId)
     for testVO in testVOs:      # un peu boeuf, peut mieux faire !
         return testVO
     return None
@@ -59,7 +68,7 @@ class MyHandler(webapp.RequestHandler):
         # and he will be requested to authenticate
         #
         if action=="getTest" and not(user):
-            testVO = getTestVO(testId)
+            testVO = getTestVO(testId, user)
             if testVO and testVO.isDemo:
                 self.response.out.write(json.dumps({'isAuthor':False, 'content':testVO.content}))     # Note: content is already json
                 return
@@ -87,7 +96,7 @@ class MyHandler(webapp.RequestHandler):
         # SAVE
         #
         if action == "saveTest":
-            testVO = getTestVO(testId)
+            testVO = getTestVO(testId, user)
             if (testVO and testVO.author!=user):        # only the test owner can modify it ! 
                 return
             if not(testVO):
@@ -105,7 +114,7 @@ class MyHandler(webapp.RequestHandler):
         # GET
         #
         if (action == "getTest"):
-            testVO = getTestVO(testId)
+            testVO = getTestVO(testId, user)
             if testVO and (testVO.author==user or testVO.isDemo):
                 self.response.out.write(json.dumps({'isAuthor':testVO.author==user, 'content':testVO.content}))     # Note: content is already json
             return
@@ -114,7 +123,7 @@ class MyHandler(webapp.RequestHandler):
         # DELETE
         #
         if action == "deleteTest":
-            testVO = getTestVO(testId)
+            testVO = getTestVO(testId, user)
             if testVO and testVO.author==user:
                 testVO.delete();
                 self.response.out.write(json.dumps("ok"))
