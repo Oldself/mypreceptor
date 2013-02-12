@@ -65,7 +65,7 @@ function(constants, model, delegate) {
 		$.mobile.showPageLoadingMsg();		
 	});
 
-	$(document).ajaxStart(function() {
+	$(document).ajaxStop(function() {
 		$.mobile.hidePageLoadingMsg();		
 	});
 	
